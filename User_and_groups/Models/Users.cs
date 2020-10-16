@@ -12,7 +12,7 @@ namespace User_and_groups.Models
         public int IdUsers { get; set; }
         public string NameUsers { get; set; }
 
-        public virtual ICollection<Groups> Groups { get; set; }
+        public ICollection<Groups> Groups { get; set; }
 
         public Users()
         {
