@@ -31,7 +31,7 @@
             <div class="editor-label"><b>Курсы</b></div>
             @foreach (User_and_groups.Models.Groups g in ViewBag.Groups)
             {
-                <input type="checkbox" name="selectedCourses" value="@g.IdGroups"
+                <input type="checkbox" name="selectedGroups" value="@g.IdGroups"
                        @(Model.Groups.Contains(g) ? "checked=\"checked\"" : "") />@g.NameGroups <br />
                 }
             <div class="form-group">

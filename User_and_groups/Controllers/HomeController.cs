@@ -32,8 +32,31 @@ namespace User_and_groups.Controllers
             db.Dispose();
             base.Dispose(disposing);
         }
+        public ActionResult Create()
+        {
+            ViewBag.Groups = db.Groups.ToList();
+            return View();
+        }
 
-        
+        [HttpPost]
+        public ActionResult Create(Users users, int [] selectedGroups)
+        {
+            if (selectedGroups != null)
+            {
+                //получаем выбранные курсы
+                foreach (var g in db.Groups.Where(co => selectedGroups.Contains(co.IdGroups)))
+                {
+                    users.Groups.Add(g);
+                }
+            }
+
+            db.Users.Add(users);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+
         public ActionResult Edit(int id = 0)
         {
             Users users = db.Users.Include(s => s.Groups).FirstOrDefault(s => s.IdUsers == id);
@@ -46,19 +69,19 @@ namespace User_and_groups.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(Users users, int[] selectedCourses, int id = 0)
+        public ActionResult Edit(Users users, int[] selectedGroups, int id = 0)
         {
             Users newStudent = db.Users.Include(s => s.Groups).FirstOrDefault(s => s.IdUsers == id);
             newStudent.NameUsers = users.NameUsers;
 
 
             newStudent.Groups.Clear();
-            if (selectedCourses != null)
+            if (selectedGroups != null)
             {
                 //получаем выбранные курсы
-                foreach (var c in db.Groups.Where(co => selectedCourses.Contains(co.IdGroups)))
+                foreach (var g in db.Groups.Where(co => selectedGroups.Contains(co.IdGroups)))
                 {
-                    newStudent.Groups.Add(c);
+                    newStudent.Groups.Add(g);
                 }
             }
 
