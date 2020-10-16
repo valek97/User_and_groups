@@ -1,0 +1,34 @@
+﻿@model User_and_groups.Models.Users
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+
+    <fieldset>
+        <legend>Информация о пользователе</legend>
+
+        <div class="display-label"><b>Имя</b></div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.NameUsers)
+        </div>
+
+        <div class="display-label"><b>Группы</b></div>
+        <ul>
+            @foreach (User_and_groups.Models.Groups c in Model.Groups)
+            {
+                <li>@c.NameGroups</li>
+            }
+        </ul>
+
+    </fieldset>
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdUsers }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
