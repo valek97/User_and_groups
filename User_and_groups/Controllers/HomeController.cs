@@ -89,5 +89,21 @@ namespace User_and_groups.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        [HttpDelete]
+        public ActionResult Delete(int? id = 0)
+        {
+            if (id == null)
+            {
+                return HttpNotFound();
+            }
+            Users users = db.Users.Include(s => s.Groups).FirstOrDefault(s => s.IdUsers == id);
+            if (users != null)
+            {
+                db.Users.Remove(users);
+                db.SaveChanges();
+            }
+            
+            return Redirect("/api/groups/${id}");
+        }
     }
 }
